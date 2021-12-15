@@ -68,6 +68,18 @@ function App() {
     setIsVideoPlaying(false);
   };
 
+  const onTimerTick = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    if (!audioRef) return;
+
+    const currentTime = e.currentTarget.currentTime;
+
+    if (isIdle && currentTime > 1.13 && currentTime < 6) {
+      audioRef.current!.volume = 0.05;
+    } else if (audioRef.current!.volume !== 0.2) {
+      audioRef.current!.volume = 0.2;
+    }
+  };
+
   return (
     <div className="App">
       <audio ref={audioRef} autoPlay loop>
@@ -146,9 +158,7 @@ function App() {
             loop={isIdle}
             autoPlay
             onEnded={onVideoEnd}
-            onTimeUpdate={(e) => {
-              console.log("e", e.currentTarget.currentTime);
-            }}
+            onTimeUpdate={onTimerTick}
           >
             <source
               ref={videSource}
