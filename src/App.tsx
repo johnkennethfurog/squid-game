@@ -4,7 +4,7 @@ import "./App.css";
 
 function App() {
   const playButtonRef = React.useRef<HTMLButtonElement>(null);
-  const videoRef = React.useRef<any>(null);
+  const videoRef = React.useRef<any>();
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const videSource = React.useRef<HTMLSourceElement>(null);
   const [showScne2, setShowScne2] = React.useState(false);
@@ -12,6 +12,9 @@ function App() {
   const [isIdle, setisIdle] = React.useState(true);
   const [isVideoPlaying, setIsVideoPlaying] = React.useState(false);
   const [startPlaying, setStartPlaying] = React.useState(false);
+
+  const audioVolume = 0.7;
+  const videoVolume = 1;
 
   const renderTime = ({ remainingTime }: { remainingTime: number }) => {
     const min = remainingTime / 60;
@@ -51,7 +54,7 @@ function App() {
 
     if (audioRef.current) {
       audioRef.current.play();
-      audioRef.current.volume = 0.2;
+      audioRef.current.volume = audioVolume;
     }
 
     setTimeout(() => {
@@ -75,8 +78,14 @@ function App() {
 
     if (isIdle && currentTime > 1.13 && currentTime < 6) {
       audioRef.current!.volume = 0.05;
-    } else if (audioRef.current!.volume !== 0.2) {
-      audioRef.current!.volume = 0.2;
+    } else if (audioRef.current!.volume !== audioVolume) {
+      audioRef.current!.volume = audioVolume;
+    }
+
+    if (!isIdle && currentTime > 3.9 && currentTime < 8.9) {
+      videoRef.current!.volume = 0.9;
+    } else if (videoRef.current.volume !== videoVolume) {
+      videoRef.current!.volume = videoVolume;
     }
   };
 
