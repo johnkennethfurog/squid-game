@@ -81,7 +81,12 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div
+      className="App"
+      onClick={() => {
+        playButtonRef.current?.focus();
+      }}
+    >
       <audio ref={audioRef} autoPlay loop>
         <source src="/assets/bg_sound.mp3" type="audio/mp3" />
       </audio>
@@ -116,6 +121,7 @@ function App() {
               border: "none",
               outline: "none",
               cursor: "pointer",
+              fontFamily: "Montserrat",
             }}
           >
             START!
